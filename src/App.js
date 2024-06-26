@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from 'react';
+import Counter from './Components/Counter';
+import Display from './Components/Display';
+
+function reducer(state, action) {
+    let newState ;
+    switch(action.type){
+      case "increase":
+        newState = { count : state.count + 1};
+        break;
+        default :
+        break;
+    }
+    return newState
+}
+
 
 function App() {
+
+  const [state, dispatch] = useReducer(reducer, { count: 0});
+ 
+ const handleCount = () => {
+    dispatch({ type : "increase"})
+ }
+ console.log(state)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+    <div>
+    <Display count={state.count}/>
+    <Counter setCount={handleCount}/>
     </div>
+        
+   
   );
 }
 
